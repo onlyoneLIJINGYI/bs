@@ -14,11 +14,13 @@ public class MenuController {
     @Autowired
     AdminMenuService adminMenuService;
 
+    //请求当前用户对应的菜单
     @GetMapping("/api/menu")
     public Result menu() {
         return ResultFactory.buildSuccessResult(adminMenuService.getMenusByCurrentUser());
     }
 
+    //请求角色对应的菜单
     @GetMapping("/api/admin/role/menu")
     public Result listAllMenus() {
         return ResultFactory.buildSuccessResult(adminMenuService.getMenusByRoleId(1));

@@ -23,12 +23,14 @@ public class UserService {
     @Autowired
     AdminUserRoleService adminUserRoleService;
 
+    //查询所有用户的用户信息和角色信息
     public List<UserDTO> list() {
+        //查询所有用户信息
         List<User> users = userDAO.findAll();
 
         // Find all roles in DB to enable JPA persistence context.
 //        List<AdminRole> allRoles = adminRoleService.findAll();
-
+        //将user转换成DTO过滤掉用户的密码和盐这两个字段信息
         List<UserDTO> userDTOS = users
                 .stream().map(user -> (UserDTO) new UserDTO().convertFrom(user)).collect(Collectors.toList());
 
@@ -46,7 +48,13 @@ public class UserService {
         return null != user;
     }
 
+    public User findById(int uid) {
+
+        return userDAO.findById(uid);
+    }
+
     public User findByUsername(String username) {
+
         return userDAO.findByUsername(username);
     }
 
@@ -60,7 +68,6 @@ public class UserService {
         String phone = user.getPhone();
         String email = user.getEmail();
         String password = user.getPassword();
-
         username = HtmlUtils.htmlEscape(username);
         user.setUsername(username);
         name = HtmlUtils.htmlEscape(name);
@@ -70,17 +77,13 @@ public class UserService {
         email = HtmlUtils.htmlEscape(email);
         user.setEmail(email);
         user.setEnabled(true);
-
         if (username.equals("") || password.equals("")) {
             return 0;
         }
-
         boolean exist = isExist(username);
-
         if (exist) {
             return 2;
         }
-
 
         // 生成盐,默认长度 16 位，先生成了随机的 byte 数组，又转换成了字符串类型的 base64 编码并返回
         String salt = new SecureRandomNumberGenerator().nextBytes().toString();

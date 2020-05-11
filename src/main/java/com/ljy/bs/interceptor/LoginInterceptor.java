@@ -19,7 +19,7 @@ public class LoginInterceptor  implements HandlerInterceptor{
     public boolean preHandle (HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object o) throws Exception {
         // 放行 options 请求，否则无法让前端带上自定义的 header 信息，导致 sessionID 改变，shiro 验证失败
         //由于跨域情况下会先发出一个 options 请求试探，这个请求是不带 cookie 信息的，所以 shiro 无法获取到 sessionId，将导致认证失败。
-        if (HttpMethod.OPTIONS.toString().equals(httpServletRequest.getMethod())) {
+        /*if (HttpMethod.OPTIONS.toString().equals(httpServletRequest.getMethod())) {
             httpServletResponse.setStatus(HttpStatus.NO_CONTENT.value());
             return true;
         }
@@ -29,8 +29,8 @@ public class LoginInterceptor  implements HandlerInterceptor{
         if (!subject.isAuthenticated()) {
             return false;
         }
-        return true;
-        /*HttpSession session = httpServletRequest.getSession();
+        return true;*/
+        HttpSession session = httpServletRequest.getSession();
         String contextPath=session.getServletContext().getContextPath();
         String[] requireAuthPages = new String[]{
                 "index",
@@ -48,7 +48,7 @@ public class LoginInterceptor  implements HandlerInterceptor{
                 return false;
             }
         }
-        return true;*/
+        return true;
     }
 
     private boolean begingWith(String page, String[] requiredAuthPages) {

@@ -33,7 +33,7 @@ public class AdminMenuService {
 
     //根据当前用户查询所有菜单项
     public List<AdminMenu> getMenusByCurrentUser() {
-        // 从数据库中获取当前用户
+        // 使用shiro获取当前系统登录的用户名
         String username = SecurityUtils.getSubject().getPrincipal().toString();
         System.out.println("当前系统登录的用户是："+username);
         User user = userService.findByUsername(username);

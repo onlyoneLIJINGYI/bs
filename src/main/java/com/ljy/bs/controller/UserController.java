@@ -21,18 +21,22 @@ public class UserController {
     @Autowired
     AdminUserRoleService adminUserRoleService;
 
+    //请求所有用户的用户信息和角色信息
     @CrossOrigin
     @GetMapping("/api/admin/user")
     public Result listUsers() {
+        System.out.println("获取用户信息成功");
         return ResultFactory.buildSuccessResult(userService.list());
     }
 
+    @CrossOrigin
     @PutMapping("/api/admin/user/status")
     public Result updateUserStatus(@RequestBody @Valid User requestUser) {
         userService.updateUserStatus(requestUser);
         return ResultFactory.buildSuccessResult("用户状态更新成功");
     }
 
+    @CrossOrigin
     @PutMapping("/api/admin/user/password")
     public Result resetPassword(@RequestBody @Valid User requestUser) {
         userService.resetPassword(requestUser);

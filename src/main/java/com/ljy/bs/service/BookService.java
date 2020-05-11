@@ -20,10 +20,17 @@ public class BookService {
     CategoryService categoryService;
 
     public List<Book> list() {
-        Sort sort = new Sort(Sort.Direction.DESC, "id");
-        return bookDAO.findAll(sort);
+        //按倒序查询
+        /*Sort sort = new Sort(Sort.Direction.DESC, "id");
+        return bookDAO.findAll(sort);*/
+        return bookDAO.findAll();
     }
 
+
+    public Book findById(int rid) {
+
+        return bookDAO.findById(rid);
+    }
     public void addOrUpdate(Book book) {
         bookDAO.save(book);
     }
