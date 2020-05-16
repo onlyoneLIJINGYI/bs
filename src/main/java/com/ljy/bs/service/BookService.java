@@ -3,6 +3,7 @@ package com.ljy.bs.service;
 import com.ljy.bs.dao.BookDAO;
 import com.ljy.bs.entity.Category;
 import com.ljy.bs.entity.Book;
+import com.ljy.bs.utils.ItemSimiliarity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
@@ -19,6 +20,12 @@ public class BookService {
     @Autowired
     CategoryService categoryService;
 
+    //推荐资源的方法
+    public List<Book> recommendByUid(int uid){
+        List<Book> recomLists= ItemSimiliarity.recommend(uid);
+        return recomLists;
+    }
+    //查询所有资源
     public List<Book> list() {
         //按倒序查询
         /*Sort sort = new Sort(Sort.Direction.DESC, "id");

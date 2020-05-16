@@ -19,6 +19,8 @@
     </properties>
 
     <dependencies>
+
+        <!--    原项目所需依赖-->
         <!-- shiro -->
         <dependency>
             <groupId>org.apache.shiro</groupId>
@@ -165,6 +167,16 @@
             <version>5.5.0</version>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-test</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-test</artifactId>
+            <version>2.1.6.RELEASE</version>
+        </dependency>
+
 
     </dependencies>
 

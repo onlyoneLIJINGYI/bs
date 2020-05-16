@@ -1,9 +1,7 @@
 package com.ljy.bs.entity;
 
-
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.*;
-
 import javax.persistence.*;
 
 @Data
@@ -11,26 +9,17 @@ import javax.persistence.*;
 @AllArgsConstructor
 @Builder
 @Entity
-@Table(name = "book")
+@Table(name="papers")
 @ToString
+//前后端数据交互是json格式，user类对象会被转换为json数据，后端使用jpa做实体类持久化，jpa创造的代理类会添加以下两个属性无需json化，因此使用JsonIgnoreProperties将两个属性忽略
 @JsonIgnoreProperties({"handler","hibernateLazyInitializer"})
-public class Book {
+public class Paper {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     int id;
-
-//将category id作为外键进行查询
-    @ManyToOne
-    @JoinColumn(name="cid")
-    private Category category;
-
-    String cover;
-    String title;
-    String author;
-    String date;
-    String press;
-    String abs;
+    private String author;
+    private String title;
     private int likecnt;
 
     /**存储物品相似度，只在推荐时使用
@@ -38,8 +27,4 @@ public class Book {
      * */
     @Transient
     private double w;
-
-
 }
-
-

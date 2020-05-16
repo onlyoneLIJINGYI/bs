@@ -2,10 +2,13 @@ package com.ljy.bs.controller;
 
 import com.ljy.bs.entity.Book;
 import com.ljy.bs.entity.Rate;
+import com.ljy.bs.entity.Paper;
+import com.ljy.bs.entity.User;
 import com.ljy.bs.result.Result;
 import com.ljy.bs.result.ResultFactory;
 import com.ljy.bs.service.BookService;
 import com.ljy.bs.service.RateService;
+import com.ljy.bs.service.PaperService;
 import com.ljy.bs.utils.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -13,6 +16,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 /*图书业务请求的api
@@ -23,7 +27,15 @@ public class LibraryController {
     BookService bookService;
     @Autowired
     RateService rateService;
+    @Autowired
+    PaperService paperService;
 
+    /** 请求推荐资源的api，根据用户id获取推荐的资源列表,api方法中是list类型，service方法中返回的是ArrayList类型的（可能会引起报错）*/
+    @CrossOrigin //允许跨域请求的注解
+    @PostMapping("/api/recommend")
+    public List<Book> recommendByUid(@RequestBody User user) throws Exception {
+        return bookService.recommendByUid(user.getId());
+    }
 
     //请求资源评论信息（根据资源id，并查询评论的用户信息）
     @CrossOrigin //允许跨域请求的注解
@@ -90,6 +102,9 @@ public class LibraryController {
     }
 
     /*请求资源封面url的接口,当上传图片时请求该api，给图片设置网站端口开头命名的url并返回给前台
+将上传的图片资源文件进行压缩，重命名。使用创建的StringUtils类随机生成指定长度的字符串，与原文件类型名后缀结合生成新的文件名
+文件保存路径在MyWebConfigurer类中定义
+缺点：前端资源编辑框中上传图片即会保存在项目资源文件下，取消提交，没有点击保存按钮，资源也保存在了指定文件下，造成资源浪费。
     * */
     @CrossOrigin
     @PostMapping("api/covers")

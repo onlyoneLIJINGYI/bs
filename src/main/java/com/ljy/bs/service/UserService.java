@@ -23,6 +23,12 @@ public class UserService {
     @Autowired
     AdminUserRoleService adminUserRoleService;
 
+    /**新建添加推荐功能
+     * */
+    public List<User> findAll(){
+        return userDAO.findAll();
+    }
+
     //查询所有用户的用户信息和角色信息
     public List<UserDTO> list() {
         //查询所有用户信息

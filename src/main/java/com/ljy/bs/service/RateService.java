@@ -43,8 +43,6 @@ public class RateService {
             Book book=bookService.findById(rate.getRid());
             rate.setBook(book);
         });
-        /*Book book=bookService.findById(rate.getRid());
-        rate.setBook(book);*/
         return ratelist;
     }
 }
